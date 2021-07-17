@@ -1,0 +1,8 @@
+{
+  "name": "Amongus",
+  "author": "{DTR}TheTAFH",
+  "main": "example.java.MainAmogus",
+  "description": "Amongus gamemode.",
+  "version": 1.0,
+  "minGameVersion": 127
+}
