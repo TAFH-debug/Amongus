@@ -83,7 +83,6 @@ public class MainAmogus extends Plugin {
         Events.on(EventType.Trigger.update.getClass(), o -> {
             VoteKick.update();
             Impostor.update();
-            UnitTypes.navanax.lightRadius = 20.0f;
         });
 
         Events.on(EventType.TapEvent.class, c -> {

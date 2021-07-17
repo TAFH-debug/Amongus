@@ -5,10 +5,7 @@ import arc.util.Log;
 import mindustry.content.UnitTypes;
 import mindustry.game.Rules;
 import mindustry.game.Team;
-import mindustry.gen.Call;
-import mindustry.gen.Nulls;
-import mindustry.gen.Player;
-import mindustry.gen.Unit;
+import mindustry.gen.*;
 import mindustry.world.Tile;
 
 import java.util.HashMap;
@@ -29,6 +26,11 @@ public class Impostor extends PlayerA{
     }
 
     public static void update() {
+        for(Player player : Groups.player) {
+            if(player.unit().dead || Spectator.getSpectator.containsValue(player)) {
+
+            }
+        }
     }
 
     public void inVent(Tile tile) {
