@@ -7,10 +7,7 @@ Fixme 24.06.2021
 import arc.Events;
 import arc.util.CommandHandler;
 import arc.util.Log;
-import example.java.data.AUEvents;
-import example.java.data.DeadBody;
-import example.java.data.Position;
-import example.java.data.VoteKick;
+import example.java.data.*;
 import example.java.player.Impostor;
 import example.java.player.Spectator;
 import example.java.game.Game;
@@ -82,6 +79,8 @@ public class MainAmogus extends Plugin {
         Events.on(EventType.Trigger.update.getClass(), o -> {
             VoteKick.update();
             Impostor.update();
+            Task.update();
+            game.update();
         });
 
         Events.on(EventType.TapEvent.class, c -> {

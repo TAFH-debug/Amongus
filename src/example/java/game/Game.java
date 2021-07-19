@@ -7,6 +7,7 @@ import example.java.MainAmogus;
 import example.java.data.DeadBody;
 import example.java.data.GameData;
 import example.java.data.Position;
+import example.java.data.Task;
 import example.java.player.Impostor;
 import example.java.player.PlayerA;
 import example.java.player.Spectator;
@@ -119,5 +120,12 @@ public class Game {
         Impostor.getImpostor.clear();
         Spectator.spectators.clear();
         Spectator.getSpectator.clear();
+    }
+    public void update() {
+        for(PlayerA playerA : PlayerA.players) {
+            if(Vars.world.tile(playerA.player.tileX(), playerA.player.tileY()).floor() == Blocks.grass.asFloor()) {
+                Task task = new Task(playerA, Vars.world.tile(playerA.player.tileX(), playerA.player.tileY()));
+            }
+        }
     }
 }
