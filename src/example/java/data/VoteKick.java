@@ -16,13 +16,19 @@ public class VoteKick {
         if(MainAmogus.game.isVoteKick) {
             return;
         }
+        for(DeadBody body : DeadBody.deadBodies) {
+            body.remove();
+        }
         interval = new Interval();
         MainAmogus.game.isVoteKick = true;
         PlayerA.sendInfo();
         disscussion_time = 60;
         for (PlayerA playerA : PlayerA.players) {
             playerA.player.unit().damage(1000);
-            playerA.player.unit();
+        }
+        PlayerA.spawn();
+        for (PlayerA playerA : PlayerA.players) {
+            playerA.freeze();
         }
     }
 
@@ -45,6 +51,7 @@ public class VoteKick {
         for(PlayerA player : PlayerA.players) {
             player.isVoted = false;
             player.votesToKick = 0;
+            player.unfreeze();
         }
         MainAmogus.game.isVoteKick = false;
     }

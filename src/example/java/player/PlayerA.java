@@ -3,11 +3,15 @@ package example.java.player;
 
 import arc.math.Mathf;
 import arc.struct.Seq;
+import example.java.MainAmogus;
+import example.java.game.Game;
 import mindustry.Vars;
+import mindustry.content.UnitTypes;
 import mindustry.game.Rules;
 import mindustry.game.Team;
 import mindustry.gen.Call;
 import mindustry.gen.Player;
+import mindustry.gen.Unit;
 
 import java.util.HashMap;
 
@@ -17,7 +21,6 @@ public class PlayerA {
     public int votesToKick;
     public int number;
     public Player player;
-    public boolean isKilled;
     public static Seq<PlayerA> players = new Seq<>();
     public static HashMap<Player, PlayerA> getPlayerA = new HashMap<>();
     public static  HashMap<Integer, PlayerA> getPlayerAbyNum = new HashMap<>();
@@ -27,7 +30,6 @@ public class PlayerA {
         this.votesToKick = 0;
         this.isVoted = false;
         this.number = setNumber();
-        this.isKilled = false;
         getPlayerAbyNum.put(number, this);
     }
 
@@ -48,7 +50,6 @@ public class PlayerA {
     }
 
     public void setSpectator() {
-        this.isKilled = true;
         this.player.team(Team.derelict);
         this.player.clearUnit();
         players.remove(this);
@@ -71,6 +72,23 @@ public class PlayerA {
                 "You can using the command /vote <number> to vote.");
         for(PlayerA playerA : players) {
             Call.sendMessage(playerA.player.name() + ":[white] " + playerA.number + "\n");
+        }
+    }
+    public static void spawn() {
+        int i = 0;
+        for(PlayerA playerA : players) {
+            if(Impostor.getImpostor.containsValue(playerA)) {
+                Unit imp = UnitTypes.mace.spawn(Team.sharded, MainAmogus.game.spawnPos.get(i).x, MainAmogus.game.spawnPos.get(i).y);
+                imp.type = UnitTypes.dagger;
+                imp.spawnedByCore = true;
+                playerA.player.unit(imp);
+            }
+            else {
+                Unit crw = UnitTypes.dagger.spawn(Team.sharded, MainAmogus.game.spawnPos.get(i).x, MainAmogus.game.spawnPos.get(i).y);
+                crw.spawnedByCore = true;
+                playerA.player.unit(crw);
+            }
+            i++;
         }
     }
 }

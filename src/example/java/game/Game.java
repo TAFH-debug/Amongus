@@ -4,7 +4,9 @@ import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.Log;
 import example.java.MainAmogus;
+import example.java.data.DeadBody;
 import example.java.data.GameData;
+import example.java.data.Position;
 import example.java.player.Impostor;
 import example.java.player.PlayerA;
 import example.java.player.Spectator;
@@ -26,8 +28,7 @@ public class Game {
     public boolean isVoteKick;
     public boolean isSabotage;
     public int skipVotes;
-    public int spawnX;
-    public int spawnY;
+    public Seq<Position> spawnPos;
     public int completedTasks = 0;
 
     public void Game() {
@@ -42,6 +43,13 @@ public class Game {
     //Начало игры
     public void start() {
         Call.sendMessage("[green]Requied number of players collected.Starting a game...");
+        int i = 0;
+        while(i >= 10) {
+            PlayerA playerA = new PlayerA(Groups.player.index(i));
+            PlayerA.players.add(playerA);
+            PlayerA.getPlayerA.put(Groups.player.index(i), playerA);
+            i++;
+        }
         loadMap();
         Vars.state.rules = GameData.getRules();
         Impostor.chooseImpostor();
@@ -51,19 +59,7 @@ public class Game {
             if(player.player.team() == Team.sharded) {
                 player.player.team(Team.get(Mathf.random(2, 250)));
             }
-            if(player.isImpostor) {
-                Unit e = UnitTypes.mace.spawn(Team.sharded,  spawnX, spawnY);
-                e.type = UnitTypes.dagger;
-                e.spawnedByCore = true;
-                player.player.unit(e);
-                Log.info("Impostor unit");
-                return;
-            }
-            Unit t = UnitTypes.dagger.spawn(Team.sharded, spawnX, spawnY);
-            t.spawnedByCore = true;
-            player.player.unit(t);
-            Log.info("Crewmate unit");
-            player.player.unit().heal();
+            PlayerA.spawn();
         }
     }
 
@@ -108,15 +104,10 @@ public class Game {
         }
         Log.info("Go!");
     }
-    public void update() {
-        if(isStarted){
-
-        }
-        else{
-
-        }
-    }
     public void restart() {
+        for(DeadBody body : DeadBody.deadBodies) {
+            body.remove();
+        }
         Log.info("---SERVER RESTARTING---");
         Log.info("Restarting!");
         for(Player player : Groups.player) {

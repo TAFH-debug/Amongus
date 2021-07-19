@@ -7,6 +7,9 @@ Fixme 24.06.2021
 import arc.Events;
 import arc.util.CommandHandler;
 import arc.util.Log;
+import example.java.data.AUEvents;
+import example.java.data.DeadBody;
+import example.java.data.Position;
 import example.java.data.VoteKick;
 import example.java.player.Impostor;
 import example.java.player.Spectator;
@@ -23,8 +26,8 @@ import mindustry.mod.Plugin;
 import mindustry.net.Administration;
 
 public class MainAmogus extends Plugin {
-    int min_players_limit;
-    int max_players_limit;
+    public final int min_players_limit = 5;
+    public final int max_players_limit = 10;
 
 
     public static Lobby lob = new Lobby();
@@ -34,13 +37,12 @@ public class MainAmogus extends Plugin {
     @Override
     public void init() {
         Events.on(EventType.ServerLoadEvent.class, p -> {
-            min_players_limit = 5;
-            max_players_limit = 10;
             lob.map();
             Vars.state.rules = lob.setLobbyRules();
             Vars.netServer.openServer();
             Log.info("AMONG US!");
             UnitTypes.dagger.weapons.clear();
+            UnitTypes.crawler.weapons.get(0).bullet.killShooter = false;
         });
 
         Events.on(EventType.PlayerJoin.class, p -> {
@@ -59,10 +61,7 @@ public class MainAmogus extends Plugin {
                 Call.sendMessage("[accent]Wait to other players.Write /info to information about gamemode");
                 u = UnitTypes.dagger.spawn(Team.sharded, Team.sharded.core().x(), Team.sharded.core().y + 16);
                 p.player.unit(u);
-                PlayerA playerA = new PlayerA(p.player);
-                PlayerA.players.add(playerA);
-                PlayerA.getPlayerA.put(p.player, playerA);
-                Call.setHudText("[cyan]Players: " + PlayerA.players.size);
+                Call.setHudText("[cyan]Players: " + Groups.player.size());
                 Log.info("New player!");
             }
         });
@@ -86,9 +85,6 @@ public class MainAmogus extends Plugin {
         });
 
         Events.on(EventType.TapEvent.class, c -> {
-            if(true) {
-                return;
-            }
             if(!(c.tile.floor() == Blocks.darkPanel1.asFloor())) {
                 return;
             }
@@ -103,7 +99,22 @@ public class MainAmogus extends Plugin {
                 return;
             }
             if(t.tile.block() == Blocks.phaseWall) {
+                if(game.isSabotage) {
+                    return;
+                }
+                if(!game.isStarted) {
+                    return;
+                }
+                if(game.isVoteKick) {
+                    return;
+                }
+                Call.infoMessage("[scarlet]EMERGENCY MEETING!");
                 VoteKick.start();
+            }
+            for(DeadBody body : DeadBody.deadBodies) {
+                if(body.Xpos == t.tile.x || body.Ypos == t.tile.y) {
+                    Events.fire(new AUEvents.DeadBodyFoundEvent(t.player, body));
+                }
             }
         });
 
@@ -118,14 +129,18 @@ public class MainAmogus extends Plugin {
             }
         });
 
+        Events.on(AUEvents.DeadBodyFoundEvent.class, q -> {
+            q.deadBody.remove();
+            Call.announce("");
+            VoteKick.start();
+        });
+
         Events.on(EventType.WorldLoadEvent.class, t -> {
             for(int x = 0; x < Vars.world.width(); x++) {
                 for(int y = 0; y < Vars.world.height(); y++) {
-                    if(Vars.world.tile(x, y).floor() == Blocks.magmarock.asFloor()) {
-                        game.spawnX = x * 8;
-                        game.spawnY = y * 8;
-                        Log.info(x +" " + y +" setted");
-                        break;
+                    if(Vars.world.tile(x, y).floor() == Blocks.hotrock.asFloor()) {
+                        Position pos = new Position(x * 8, y * 8);
+                        game.spawnPos.add(pos);
                     }
                 }
             }
@@ -207,7 +222,7 @@ public class MainAmogus extends Plugin {
         });
 
         handler.<Player>register("send","<message>", "Send message(only for testing)", (args,player) -> {
-            Call.sendMessage(player.name + ": " + args.toString());
+            Call.sendMessage(player.name + "[white]: " + args.toString());
         });
 
     }
