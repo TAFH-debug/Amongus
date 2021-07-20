@@ -13,7 +13,7 @@ import mindustry.world.Tile;
 
 import java.util.HashMap;
 
-public class Impostor extends PlayerA{
+public class Impostor extends PlayerA {
     private static int i;
     public static Player player;
     public static HashMap<Player, Impostor> getImpostor = new HashMap<>();
@@ -44,14 +44,13 @@ public class Impostor extends PlayerA{
             rules.ambientLight.g = 0.0f;
             rules.ambientLight.b = 0.02f;
             rules.ambientLight.a = 1f;
-            u = UnitTypes.mace.spawn(Team.sharded, tile.x, tile.y);
-            u.type(UnitTypes.dagger);
-            player.unit(u);
+            Call.setRules(player.con, rules);
+            unfreeze();
             isInVent = false;
             return;
         }
         isInVent = true;
-        player.unit().damage(1000);
+        freeze();
         rules = new Rules();
         rules.ambientLight.r = 0.005f;
         rules.ambientLight.g = 0.0f;
