@@ -3,6 +3,7 @@ package example.java.player;
 import arc.Events;
 import arc.math.Mathf;
 import arc.util.Log;
+import example.java.MainAmogus;
 import example.java.data.AUEvents;
 import example.java.data.DeadBody;
 import mindustry.content.UnitTypes;
@@ -19,7 +20,6 @@ public class Impostor extends PlayerA {
     public static HashMap<Player, Impostor> getImpostor = new HashMap<>();
     public boolean isInVent;
     private Rules rules;
-    public Unit u;
 
     public Impostor(Player player) {
         super(player);
@@ -29,6 +29,12 @@ public class Impostor extends PlayerA {
     }
 
     public static void update() {
+        if(!MainAmogus.game.isStarted) {
+            return;
+        }
+        if(MainAmogus.game.isVoteKick) {
+            return;
+        }
         for(Player player : Groups.player) {
             if(player.unit().dead || !Spectator.getSpectator.containsValue(player)) {
                 DeadBody body = new DeadBody((int)player.x, (int)player.y);

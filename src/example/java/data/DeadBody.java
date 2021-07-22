@@ -11,7 +11,7 @@ public class DeadBody {
     public int Xpos;
     public int Ypos;
     private Unit body;
-    public static Seq<DeadBody> deadBodies;
+    public static Seq<DeadBody> deadBodies = new Seq<>();
 
     public DeadBody(int x, int y) {
         this.Xpos = x;

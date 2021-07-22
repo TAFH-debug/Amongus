@@ -10,8 +10,8 @@ import mindustry.content.UnitTypes;
 import mindustry.world.Tile;
 
 public class Task {
-    static Interval interval;
-    static Seq<Task> tasks;
+    static Interval interval = new Interval();
+    static Seq<Task> tasks = new Seq<>();
     int task_time;
     Tile tile;
     PlayerA player;

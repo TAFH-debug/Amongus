@@ -45,7 +45,7 @@ public class Game {
     public void start() {
         Call.sendMessage("[green]Requied number of players collected.Starting a game...");
         int i = 0;
-        while(i >= 10) {
+        while(i == Groups.player.size()) {
             PlayerA playerA = new PlayerA(Groups.player.index(i));
             PlayerA.players.add(playerA);
             PlayerA.getPlayerA.put(Groups.player.index(i), playerA);
@@ -55,13 +55,13 @@ public class Game {
         Vars.state.rules = GameData.getRules();
         Impostor.chooseImpostor();
         Call.hideHudText();
-        isStarted = true;
         for(PlayerA player : PlayerA.players) {
             if(player.player.team() == Team.sharded) {
                 player.player.team(Team.get(Mathf.random(2, 250)));
             }
             PlayerA.spawn();
         }
+        isStarted = true;
     }
 
     public void end(Boolean isImpostorWin) {
