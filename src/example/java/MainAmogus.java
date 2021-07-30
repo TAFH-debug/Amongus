@@ -138,6 +138,7 @@ public class MainAmogus extends Plugin {
             for(int x = 0; x < Vars.world.width(); x++) {
                 for(int y = 0; y < Vars.world.height(); y++) {
                     if(Vars.world.tile(x, y).floor() == Blocks.hotrock.asFloor()) {
+                        Log.info("Setted");
                         Position pos = new Position(x * 8, y * 8);
                         game.spawnPos.add(pos);
                     }

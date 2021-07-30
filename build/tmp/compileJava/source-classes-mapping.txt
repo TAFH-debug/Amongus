@@ -1,18 +1,29 @@
+example/java/data/Position.java
+ example.java.data.Position
 example/java/lobby/Lobby.java
  example.java.lobby.Lobby
-example/java/player/Impostor.java
- example.java.player.Impostor
 example/java/data/GameData.java
  example.java.data.GameData
-example/java/player/PlayerA.java
- example.java.player.PlayerA
 example/java/player/Spectator.java
  example.java.player.Spectator
+example/java/data/DeadBody.java
+ example.java.data.DeadBody
+example/java/data/AUEvents.java
+ example.java.data.AUEvents
+ example.java.data.AUEvents$DeadBodyFoundEvent
+ example.java.data.AUEvents$SabotageEvent
+ example.java.data.AUEvents$VotekickEvent
 example/java/game/Sabotage.java
  example.java.game.Sabotage
 example/java/MainAmogus.java
  example.java.MainAmogus
+example/java/data/Task.java
+ example.java.data.Task
 example/java/game/Game.java
  example.java.game.Game
+example/java/player/PlayerA.java
+ example.java.player.PlayerA
+example/java/player/Impostor.java
+ example.java.player.Impostor
 example/java/data/VoteKick.java
  example.java.data.VoteKick

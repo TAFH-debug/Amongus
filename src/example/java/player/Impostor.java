@@ -6,6 +6,7 @@ import arc.util.Log;
 import example.java.MainAmogus;
 import example.java.data.AUEvents;
 import example.java.data.DeadBody;
+import mindustry.content.StatusEffects;
 import mindustry.content.UnitTypes;
 import mindustry.game.Rules;
 import mindustry.game.Team;
@@ -66,7 +67,8 @@ public class Impostor extends PlayerA {
     }
 
     public static void chooseImpostor() {
-        i = Mathf.random(0, players.size - 1);
+        Log.info("Players: " + players.size);
+        i = Mathf.random(players.size - 1);
         Log.info("Random: " + i);
         Log.info("Size: " + players.size);
         PlayerA.players.get(i).setImpostor();

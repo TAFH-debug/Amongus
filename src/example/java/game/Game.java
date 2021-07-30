@@ -45,7 +45,7 @@ public class Game {
     public void start() {
         Call.sendMessage("[green]Requied number of players collected.Starting a game...");
         int i = 0;
-        while(i == Groups.player.size()) {
+        while(i != Groups.player.size()) {
             PlayerA playerA = new PlayerA(Groups.player.index(i));
             PlayerA.players.add(playerA);
             PlayerA.getPlayerA.put(Groups.player.index(i), playerA);
